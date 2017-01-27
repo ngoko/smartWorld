@@ -52,15 +52,21 @@ M.~S. Khan, M.~Yu, P.~Feng, L.~Wang, and J.~Chambers, ``An unsupervised
   acoustic fall detection system using source separation for sound interference
   suppression,'' \emph{Signal Processing}, pp. 199--210, 2015.
 
+\bibitem{FearofFalling}
+A.~C. Scheffer, M.~J. Schuurmans, N.~V. Dijk, T.~V.~D. Hooft, and S.~E.~D.
+  Rooij, ``Fear of falling: measurement strategy, prevalence, risk factors and
+  consequences among older persons,'' \emph{Age Ageing}, vol.~37, pp. 19--24,
+  2008.
+
+\bibitem{giannakopoulos2015pyaudioanalysis}
+T.~Giannakopoulos, ``pyaudioanalysis: An open-source python library for audio
+  signal analysis,'' \emph{PloS one}, vol.~10, no.~12, 2015.
+
 \bibitem{Dataset}
 \BIBentryALTinterwordspacing
 A.~Trapet. (2013) Fall detection dataset. Le2i-Laboratoire Electronique,
   Informatique et Image. [Online]. Available:
   \url{http://le2i.cnrs.fr/Fall-detection-Dataset?lang=en}
 \BIBentrySTDinterwordspacing
-
-\bibitem{giannakopoulos2015pyaudioanalysis}
-T.~Giannakopoulos, ``pyaudioanalysis: An open-source python library for audio
-  signal analysis,'' \emph{PloS one}, vol.~10, no.~12, 2015.
 
 \end{thebibliography}
