@@ -419,12 +419,12 @@ The work of Yun Li et al~\cite{Yun2012} was also interesting, where some differe
 
 Focusing on the two previously mentioned works, but also in more that could be found in literature, we confront the question of acoustic definition. By using the term acoustic, it must be completely clear to the reader that we only speak for a system that will be able to perform a classification based just on audio data and by using features extracted by them. Mostly people who have tried to develop such systems refer to MFCC features used by different classification techniques. Mel-frequency cepstral coefficients (MFCC) features are frequently used as the frequency bands are spaced on the mel scale, which approximates the human auditory system's response more closely than linear-spaced frequency bands. So the basis is that as human auditory can detect and distinguish a fall from a non-fall incident, this kind of features can benefit classification of falls. 
 
-In this project developed to the computing model of Qarnot computing, we manage to improve in several ways from previous works. At first as the Q.rads embed a variety of sensros we don't need any specific microphone but just the simple microphones embedded in Q.rads. At the same time, as Q.rads are radiators the are present to almost every part of a smart environment that could include human activities, so we have local detection and bigger coverage that leads to increased security for the person that is using our system. Furthermore, our classification methods are trained on dataset that is mixed with noise so that the system can work on envirnoments with noise without needing any extra procedure. At last, we apart from MFCC features we workes with some more as the pyAudioAnalysis library that was used, extracts 34 different features in which MFCCs are included. For the interested reader we refer to the job of T.Giannakopoulos~\cite{giannakopoulos2015pyaudioanalysis} were there is a full list of the feature that are extracted and a description of each of them.         
+In this project developed to the computing model of Qarnot computing, we manage to improve in several ways from previous works. At first as the Q.rads embed a variety of sensros we don't need any specific microphone but just the simple microphones embedded in Q.rads. At the same time, as Q.rads are radiators the are present to almost every part of a smart environment that could include human activities, so we have local detection and bigger coverage that leads to increased security for the person that is using our system. Furthermore, our classification methods are trained on dataset that is mixed with noise so that the system can work on envirnoments with noise without needing any extra procedure. At last, we apart from MFCC features we workes with some more as the pyAudioAnalysis library that was used, extracts 34 different features in which MFCCs are included. For the interested reader we refer to the job of T.Giannakopoulos~\cite{giannakopoulos2015pyaudioanalysis} were there is a full list of the features that are extracted and a description of each of them.         
  
 
 \section{Qarnot tools for smart environments} \label{Smart}
 
-{\bf To add info for QaIoT, Q.ware etc}
+{\bf To add info for QaIoT, Q.ware etc} 
 
 
 \section{Building fall detection classifiers} \label{Fall}
@@ -445,7 +445,7 @@ Next step of the procedure was the audio files to get mixed with different types
 
 The last step to the dataset creation, is to split it in Training and Testing subsets. The proportion remains constant for the entire duration of this experimental research project. Training subset includes 80\% of the main dataset samples and Testing subset 20\%. This split is required in order to produce learning curves for each classifier and also have cross-validation during training them.
 
-\subsection{SVM and kNN implementation}
+\subsection{SVM and KNN implementation}
 
 After our dataset was fully complete and ready to use in training, SVM and kNN classifiers were implemented on it. In part we present the work done in four experimentation Phases, where the algorithms run in different proportions of data and cover all possible scenarios. The proportion of falls and no falls will be increased and decreased respectively in each Phase in order to check how the algorithms respond on the amount of data given.
 
@@ -525,7 +525,7 @@ Ph.4    & SVM & 0.20 & 0.92 & 0.90 \\
 \subsection{Figures}
 
 Here we present the learning curves for each of the four experimental Phases previously described in order to visualize our results. 
-
+{\bf arrange in correct order figures}
 
 
 \subsection{Conclusion}
@@ -538,20 +538,20 @@ After testing SVM and KNN classifiers in different amount of data and comparing 
 The results of the previous experimentations, made us considering a different approach for this type of system. The data sensitivity issue had to be solved. So in this Section, a new classifier is introduced in order to help us achieve better scores and easier classification of falls and solve the data sensitivity issue. Bootstrap Aggregating, commonly known as Bagging, is an ensemble meta-estimator. It is important to give an explanation of Bagging in order to make clear for the reader, how we think it can help us. Bagging classifier establishes base estimators to randomly selected subsets of our main dataset. Then it aggregates their estimation to produce one final estimation for the entire dataset. This is its main advantage against other methods. 
 
 The randomly selected subsets assure that we can have an estimation for all possible combinations of data instead of choosing a fixed proportion. Furthermore, the idea of base estimators, aggregated to a final estimation, gives the opportunity to combine all estimations, in an effort to consider parts of the dataset were classification is done properly and other where it is not. 
-So this section is also split in Phases. But with some differencies from the previous one. Here proportion of data is kept stable for every Phase and is 50-50\% of falls and no falls, so that we can have enough samples of both categories. The duration of audio data is still 5 seconds. 
-What is getting different at each Phase are the estimators, in an effort to see if we can achieve better results than the classifiers used in previous section. 
+
+So this section is also split in Phases. But with some differencies from the previous one. Here proportion of data is kept stable for every Phase and is 50-50\% of falls and no falls, so that we can have enough samples of both categories. The duration of audio data is still 5 seconds. What is getting different at each Phase are the estimators, in an effort to see if we can achieve better results than the classifiers used in previous section. 
 
 \subsection{Decision Tree base estimators}
 
-The first approach of classification with Bagging method was done using it's default parameters which include Decision Tree base estimators. The results produced were more than satisfying. They were much better than our initial expectations. Except from the fact that False-positive rate is under 20\% combined this time with a True-positive rate which significantly increased to 90\%, also Accuracy reached 90\% and the Learning curves also represent a system with stable improvement as more data were given to it. 
+The first approach of classification with Bagging method was done using it's default parameters which include Decision Tree base estimators. The results produced by our first try were more than satisfying. Actually they were much better than our initial expectations when we considered trying Bootstrap aggregating. Except from the fact that False-positive rate is under 20\%, combined this time with a True-positive rate which significantly increased to 90\%, also Accuracy reached 90\%. The Learning curves of this classifier represent a system with stable improvement as more data were given to it, which is a success for our systems, as it means that by collecting and providing more data to this classifier we can further improve our scores. 
 
-\subsection{kNN base estimators} 
+\subsection{KNN base estimators} 
 
-As the results of the previous Phase were really promising and much better than any previous try, it was decided make some simulations with other base estimators. In this phase, KNN base estimators were selected in an try to see if better results than the KNN classifier alone, can be produced. And as the results presented in Table 3, prove that this is a goal that can be achieved.  
+So as the results of the previous Phase were really promising and much better than any previous try, it was decided to make some simulations with other base estimators in order to examine if Bagging can have a positive effect to other classifiers. In this phase, KNN base estimators were selected in an try to see if better results than the KNN classifier alone, can be produced. And the results presented in Table 3, prove that this is a goal that can be achieved with the new method we introduced.   
 
 \subsection{SVM base estimators}
 
-After running Bagging Classifier with Decision Tree and kNN estimators it was also really important to try it with SVM estimators in a try to have also in this category better results in prove our theory of data sensitivity which we hope to solve via the Bootstrap Aggregating method. 
+After experimenting on Bagging method with Decision Tree and KNN estimators it was also really important to try it with SVM estimators. We needed to prove that in a fall detection systems were data sensitivity exists, this method can in general improve the scores of single classifiers. So we present the results of Bagging with SVM estimators in Table 3 and as the reader can notice ... {\bf finish after adding SVM results} 
 
 \begin{table}[hb]
 \caption{\it Bagging Classifier scores with different estimators}
@@ -580,6 +580,7 @@ SVM & 0.xx & 0.xx & 0.xx \\
 
 After presenting the scores for each classifier trained, what is also an important tool for machine learning are Learning curves. This section is dedicated to the Learning curves of the classifiers trained during the different phases of this project. 
 It is important to see who the system can benefit from adding more data. 
+{\bf add the figures of bagging}
 
 \begin{figure}[h]
 \vskip 0.2in
