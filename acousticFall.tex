@@ -309,7 +309,7 @@ christophe.cerin@lipn.univ-paris13.fr}
 \begin{abstract}
 
 We consider the design of an acoustic fall detection system with the Qarnot model of computing. 
-Qarnot introduced a computing model based on heaters that embed several processors and sensors. 
+Qarnot introduced a computing model based on heaters that embed processors and sensors. 
 The network of Qarnot heaters in a home and building offers several advantages for the design of smart-environments 
 systems when we consider the privacy, the real-life performance or the acceptance. 
 The main goal of this work is to show the effectiveness of this platform for the resolution of smart-home problems  
@@ -343,39 +343,55 @@ acoustic fall detection; smart-environment; bootstrap aggregation
 The demographic explosion of the eldery is offering and unprecendented opportunity for the development of a
 assisted living technologies. However, the question of the right architecture for such technologies is critical. 
 By the past, several concerns were raised on existing solutions. The sensitive topics include the privacy, 
-the acceptance or the real-life performance of such technologies. For the interested reader, we recommend the work of 
- Igual et al.~\cite{Igual2013}. 
+the acceptance or the real-life performance of such technologies. For the interested reader, we recommend 
+the work of Igual et al.~\cite{Igual2013}. 
 
-In this paper, we focus on the design of a fall detection system for elders. The conviction that supports our work is 
-that with the Qarnot model of computing~\footnote{www.qarnot-computing.com}, we can design a fall detection system 
-where several of the  classical concerns regarding assisted living technologies are addressed. Qarnot introduced 
-a utility computing model where the computing nodes are heaters that are embedded in homes, offices, buildings where they serve 
-to heat. These special computing nodes (called Q.rads) embed several processors but also sensors related for instance to 
-humidity, $\mathrm{CO_2}$, noise, presence etc. The heaters are connected to the Internet and at the upper level, the network 
+This work intends to contribute to the design of a fall detection system for elders. Our conviction is 
+that with the Qarnot model of computing~\footnote{www.qarnot-computing.com}, it is possible to formulate 
+fall detection systems where several of the  classical concerns regarding assisted living technologies are 
+addressed. Qarnot introduced a utility computing model where the computing nodes are heaters that are 
+embedded in homes, offices, buildings where they serve to heat. These special computing nodes (called Q.rads) 
+embed several processors but also sensors related for instance to humidity, $\mathrm{CO2}$, noise, presence 
+etc. The heaters are connected to the Internet and at the upper level, the network 
 of geo-distributed Q.rads is exploited as an HPC cloud infrastructure (See Figure~\ref{fig:digital}). At the scale of homes 
-and buildings in which the Q.rads are deployed, this network serves as a smart-building platform with some services like 
+and buildings in which the Q.rads are deployed, this network serves as a smart-building platform with services like 
 the analysis of the air quality or the detection of the sounds of fire-alarms. For more details about the Qarnot model, 
 we refer the interested reader to~\cite{DBLP:conf/europar/Ngoko16}.
 
+	\begin{figure}[hbtp]
+	\centering
+        \includegraphics[scale=0.27]{./Figures/layer.png}
+	%}
+	\caption{Layers of Qarnot smart-homes}
+	\label{fig:layer}
+	\end{figure}
+
+
 	\begin{figure*}[htbp]
 	\subfloat[{\scriptsize A Q.rad}]{
-            \includegraphics[width=4cm,height=3.5cm]{./Figures/rad.png}
+            \includegraphics[width=4cm,height=3.7cm]{./Figures/qrad.jpg}
          }
 	\subfloat[{\scriptsize The Qarnot model for HPC-cloud}]{
-            \includegraphics[width=10.7cm,height=3.5cm]{./Figures/model.png}
+            \includegraphics[width=10.7cm,height=3.7cm]{./Figures/model.png}
         }
 	\caption{The Qarnot model}
 	\label{fig:digital}
 	\end{figure*}
 
-In the Qarnot vision, the process view of a smart-environment (home or building) consists of a forest of distributed 
-worflows that are locally orchestrated in the Q.rads to which the environment belongs. Here, the data used by the processes are 
-issued from the sensors embedded in Q.rads or remotely. A process could for instance analyze the level of $\mathrm{CO_2}$ to make 
-recommendations on the need to open windows. Another process could continuesly analyze the sound flow that are collected 
-at the level of Q.rads in order to see whether or not there is a fall. 
-Regarding data privacy, in this vision, we can guarantee that all data collected in a building will remain in the building. 
-This changes from classical cloud-based smart-homes where the data are saved remotely in a datacenter. 
-Regarding acceptance by elders, the Qarnot solution does not require any wearable device, nor a smartphone to collect user data. 
+In the Qarnot vision, a smart-home is a computing environment whose layered architecture is depicted in Figure~\ref{fig:layer}. 
+The architecture includes 4 layers: the processes of the smart-home, the services used to compose the processes, 
+the smart-home middleware and the Q.rads.
+The smart-home processes implement the intelligent behaviors of the homes. The processes are built in composing the services of 
+the environment with the input data flow that are collected either from the Q.rads or from external sensors. An 
+example of service is an alarm detection system, a fall detection, glassbreak detection etc. An example 
+of process is a flow that collects data from a Q.rad, routes the data to an alarm service 
+and then sends an SMTP notification if an alarm is found. The main role of the middleware is to orchestrate 
+the smart-home processes on the Q.rads. The middleware also includes a storage system for keeping the data collected 
+in a home inside its building. 
+
+Regarding data privacy, this architecture can guarantee that the data collected in a building will not be sent 
+in another site. This changes from classical cloud-based smart-homes where the data are saved remotely in a datacenter. 
+Regarding acceptance by elders, the Qarnot solution does not require neither a wearable device, nor a smartphone. 
 The user does not even need to care about the functioning of their heater. Finally for real-life performance, because of the sensing and 
 computing power of the heaters~\footnote{ A heater could embed $4$ processors}, we have enough computing power to locally 
 calibrate a machine learning model, for the specific environment in which we operate.
@@ -393,57 +409,191 @@ usability by the elders.
 Acoustic fall detection systems were considered in the past. For instance, we can refer to the work of Xiaodan Zhuang~\cite{Xiaodan2009} where GMM and SVM classifier were used and they managed to achieve a fall accuracy of 59\% and 67\% respectively with using only a far-field microphone. Other insteresting works on this field are the ones of Yun et al~\cite{Yun2012} and Muhammad et al~\cite{Muhammad2014} that use audio data to achieve classification of falls, each of them in a specific way.  
 
 Differently to these works, we innovate in two points. The first is that we designed a training system to run on 
-the Qarnot cloud. This was achieved in using the Software Defined Kit of Qarnot to build a solution that is orchestrated by 
-the Q.ware resoyrce manager. The second point is that differently from existing works, we used the  bootstrap aggregation. 
+the Qarnot system. This was achieved in using the Software Defined Kit of Qarnot to build a solution that is orchestrated by 
+the Q.ware resource manager. The second point is that differently from existing works, we used the  bootstrap aggregation. 
 
-Bootstrap aggregating, also known as bagging, is a machine learning ensemble meta-algorithm which was designed to improve the stability and accuracy of machine learning algorithms by combining classifications of randomly generated training sets. Bagging can reduce variance and help to avoid the problem of overfitting. Usually it is applied to decision tree methods, but it can be applied to any method. The usage of this techniques leads to an important finding: we were able to build a meta-classifier, 
+Bootstrap aggregating, also known as bagging, is a machine learning ensemble meta-algorithm which was designed to improve the stability and accuracy of machine learning algorithms by combining classifications of randomly generated training sets. Bagging can reduce variance and help to avoid the problem of overfitting. Usually it is applied to decision tree methods, but it can be applied to any method. The usage of this technique leads to an important finding: we were able to build a meta-classifier, 
 largely more accurate than all the other classifiers taken separately. We even obtained accuracy and True positive scores that 
 we did not find in the literature. 
 
 The remainder of this paper is organized as follows. In Section~\ref{Related}, we present the related works. Section~\ref{Smart} 
-present Qarnot tools for smart environments. We detail here the architectural context in which we want to develop a fall 
+present the Qarnot architecture for smart-homes. We detail here the architectural context in which we want to develop a fall 
 detection system. Section~\ref{Fall} discusses of the training of a fall detection system with three classifiers: SVM, KNN and decision tree. 
 In Section~\ref{BaggingFall} we reconsider the question with Bagging. In Section~\ref{Conclusion}, we conclude.
 
 \section{Related Works} \label{Related}
 
-The fundamental idea of a fall detection system is actually pretty simple, as it is based on having a system that with access to some form of data, can detect falls and also distinct them from normal everyday activities of people. So in an environment, that can be a home, an office or a common public place, one or multiple sensors are embedded to create such a system. But the complexity of this idea is increased dramaticaly when we move to specific details and trying to answer questions refering to the type of sensors that should be used or the number of them or which method is in general more effective. 
+Given a flow of data related to an environment, the objective of a fall detection system is to state whether or not 
+there is a fall we can distinguish from the data flow. To collect the data, we assume that the environment 
+is equiped with sensors; depending on their number, dispositions and types, the construction of the fall detection system 
+could be more or less challenging. 
 
-A closer look to previous work done on this field, can improve our understanding of how people tried to approach and solve the fall detection problem. The work of Igual et al~\cite{Igual2013} focus on summarizing the majority of works done on this field. It specifically defines fall detection systems as assistive devices whose main objective is to alert when a fall event has occured. An interesting point they mention, that highlights the need of developing functional fall detection systems of high accuracy, is the one of fear of fall. As fear of fall they refer to the feeling raised to a person, in elder people it can be more frequent, after a fall incident. According to researches~\cite{FearofFalling} fear of falling has negative consequences to everyday life of people, in many ways. The presence or use of a fall detector though could improve people confidence and feel of security. 
+For the reader interested in a global summary of fall systems, we recommend the 
+work of Igual et al.~\cite{Igual2013}. In particular, this work discusses of the interest in fall detection system for assistive 
+living technologies. An interesting point this work mentions is the need of developing fall detection systems of high accuracy 
+because of the fear of falling. For elders, the fear of falling  can be more frequent, after a fall incident. According to 
+researches~\cite{FearofFalling} this fear has negative consequences to everyday life of people, in many ways. The presence or use of a fall detector though could improve people confidence and feel of security. 
 
-For our reader, a discrete and effective categorization of most fall detection systems until now has been done on~\cite{Igual2013}. Two categories exist and they are context-aware systems and wearable devices. Context-aware systems are using sensors to detect falls in an environment. This sensors can be cameras, pressure sensors, microphones or infrared sensors. The systems that use wearable devices are in most cases based on accelerometers that are placed/weared to different positions on the human body. Both of this categories have disadvantages that seek solution, in order to achieve acceptance of the people. For instance, people seem to be negative in the idea of wearing continuously an extra device inside their home or some other refer to privacy issues in cases that cameras are used. So a fall detection system needs to gain also the person's acceptance apart from being accurate and effective, in order to be successful. 
+The work of Igual et al. also proposed an effective classification of fall detection systems. Here, two categories are 
+distinguished: context-aware systems (without wearables) and systems based on wearable devices. Context-aware systems are built with 
+{\it stationary} sensors like cameras, pressure sensors, microphones, infrared sensors. Wearables-based systems are in most cases 
+designed with accelerometers. For both of these categories, there are some disadvantages regarding the acceptance of the system. 
+For instance, people might not agree on the idea of continuously wearing an extra device inside their home. In the same way, 
+privacy concerns might be raised against the usage of a camera. 
+Our approach belongs to the category of context-aware systems and the sensors used by our system are the microphones embedded in the Q.rads. 
 
-Our approach belongs to the category of context-aware systems and the sensors used by our system are the microphones embedded in the Q.rads. We already mentioned before that the use of Q.rads solves to crucial problems for our system. The need of wearing devices and the privacy issues. As in general context-aware systems have the advantage of not demanding from a person to wear anything, we will focus more on works done on this category previously so that we can define similarities to our approach and explain the general context. An interesting work was done by Muhammad et al~\cite{Muhammad2014}, where they use to two microphones to obtain acoustic data for their system. As they try to detect fall based on footstep acoustic data, for their work noise interfernce is an important factor so they focus a lot on noise removal. Source separation is used in order to dereverberate the signal. Next step is to extract the MFCC features of the audio data in order to use them for classification. As mentioned three types of classifiers were used Nearest neighbor, one class support vector machine (OCSVM) and a mixture of Gaussian classifier. 
+Fall detection systems based on acoustic data were already proposed in the past. Khan et al~\cite{Muhammad2014}, proposed a 
+system to detect fall based on footstep acoustic data (microphones deployed in the floor). In their work, noises interference and 
+source separation is an important pre-processing stage. The proposed system is based on Mel-frequency cepstral coefficients (MFCC) 
+features, Nearest neighbor and one class support vector machine (OCSVM) for classification. As this work, we will use MFCCs, 
+but our data are not collected from sensors located in the floor. Moreover, we will consider other types of classifiers. 
 
-The work of Yun Li et al~\cite{Yun2012} was also interesting, where some differentiations were done to the use of microphones and acoustic data. At first, instead of a simple microphone they use a circular microphone array of $0.25$ radius consisting of eight omnidirectional microphones that are distributed uniformly in the circle in order to collect acoustic data. Also every microphone has an amplifier and a gain adjuster and it is mentioned that an array like this can provide coverage for a typical living room. After collecting the audio data, localization in applied in order to define the sound source. If the source is located above the ground when the estimated height of the source is larger than the threshold then they consider a non-fall. If not, then it is considered that a fall incident occured so they follow a procedure of signal enhancement and then MFCC features are extracted. By use of Nearest Neighbor classifier they specify if there is a fall. 
+Yun Li et al~\cite{Yun2012} proposed a fall detection system based on a circular microphone array of $0.25$ radius, consisting of eight omnidirectional microphones, uniformly distributed. Such circular distribution is important to localize the sound source. The 
+system they proposed is also based on MFCC features and Nearest Neighbor classifiers. In our paper, we will not focus on the distribution 
+of sound sources; however, such a study could be envisionned because in Qarnot smart-homes, the Q.rads are distributed in different room. 
+Instead, we will consider the simple case where we want to distinguish a fall from the sound recorded on a single Q.rad. We intend 
+to generalize to several Q.rads in another study.  
 
-Focusing on the two previously mentioned works, but also in more that could be found in literature, we confront the question of acoustic definition. By using the term acoustic, it must be completely clear to the reader that we only speak for a system that will be able to perform a classification based just on audio data and by using features extracted by them. Mostly people who have tried to develop such systems refer to MFCC features used by different classification techniques. Mel-frequency cepstral coefficients (MFCC) features are frequently used as the frequency bands are spaced on the mel scale, which approximates the human auditory system's response more closely than linear-spaced frequency bands. So the basis is that as human auditory can detect and distinguish a fall from a non-fall incident, this kind of features can benefit classification of falls. 
+In~\cite{Zigel5223652}, the authors proposed a fall detection system based on floor sensors and acceloremeters. The proposed solution  
+include two sub-systems: an event detection system followed by event classification. The former sub-system aims at determining 
+segments of the acoustic flows that might comprise a fall. These segments are then sent to a Bayes classifier. One specificity 
+of the systems is to account on the human voices. For this, the system is trained with a shock sentence pronunced with a fall.
+The final system we intend to build share several aspects of the propositions made in~\cite{Zigel5223652}: the need of an audio segmentation 
+system, the introduction of shock sentences, the processing based on MFCC features. However, we intend to build such a system with 
+the Qarnot architecture. 
 
-In this project developed to the computing model of Qarnot computing, we manage to improve in several ways from previous works. At first as the Q.rads embed a variety of sensros we don't need any specific microphone but just the simple microphones embedded in Q.rads. At the same time, as Q.rads are radiators the are present to almost every part of a smart environment that could include human activities, so we have local detection and bigger coverage that leads to increased security for the person that is using our system. Furthermore, our classification methods are trained on dataset that is mixed with noise so that the system can work on envirnoments with noise without needing any extra procedure. At last, we apart from MFCC features we workes with some more as the pyAudioAnalysis library that was used, extracts 34 different features in which MFCCs are included. For the interested reader we refer to the job of T.Giannakopoulos~\cite{giannakopoulos2015pyaudioanalysis} were there is a full list of the features that are extracted and a description of each of them.         
+
+The work that we found closer to our is certainly the one of Zhuang et al.~\cite{Zhuang4959522}. The authors showed that in 
+combining mixture of gaussians (GMM) and super vector machines (SVM), it is possible to reach an accuracy close to $0.41$ on 
+acoustic fall detection. As this work, we assume in our paper that the input audio is given as a segment of $5$ seconds. We also
+use a similar model for features and consider that the input audio we process is obtained in combining falls, other significative 
+sounds and background noises. However, we differ from this work in the classification technique we use. In particular, we showed 
+that better scores could be expected with bootstrap aggregation. 
+
+      
  
 
-\section{Qarnot tools for smart environments} \label{Smart}
+\section{Qarnot architecture for smart homes} \label{Smart}
 
-{\bf To add info for QaIoT, Q.ware etc} 
+	\begin{figure}[hbtp]
+	\centering
+        \includegraphics[scale=0.17]{./Figures/gateway.png}
+	%}
+	\caption{Main components in the processing of acoustic flows for fall detection.}
+	\label{fig:flow}
+	\end{figure}
+
+In Figure~\ref{fig:flow}, we present the main components in the processing of an acoustic flow recorded in a Qarnot smart-home. 
+In this architecture, the fall detection system is composed of two programs: an observer (fall observer) and a fall classifier. 
+The observer is a daemon program deployed in Q.rads. It continuously monitors the input acoustic flow to detect falls. 
+When it suspects that parts of the flow could include a fall, it segments it in order to have an audio record whose boundaries 
+are the begining and the end of the fall. It then initiates the execution of the fall 
+classifier on the  audio record. Depending on the result of the fall classifier, the observer will send or not a 
+fall notification.  
+
+In this architecture, to access to the microphone data, the observer must first send an HTTP request to QaIot. 
+This will cause the registration of the fall observer as an actor to which QaIot must send the data related to microphones. QaIot will 
+establish a websocket communication to send these data. The fact that an actor requested data of a microphone will 
+oblige the Gateway-Iot to frequently collect acoustic data from microphone. Thus, the fall observer will almost have 
+the acoustic data in real-time. 
+
+To detect audio segments with falls, the observer uses a segmentation algorithm. The algorithm frequently computes the energy 
+and the frequency of the signal it receives. When these quantities exceed a given value, the 
+algorithm will run a pattern detection process to cut a segment that includes probable boundaries of the fall. 
+It will then send a request to QaIoT to ask for a deep analysis of the suspected segment. QaIoT will then create a task that 
+consists of running the fall classifier on the segment. The created task are next submitted to the Qarnot smart-home middleware. 
+If the run of the classifier concludes positively on the occurence of a fall a notification will be sent. In all cases, the 
+fall observer will continue to inspect the input flow.
+
+In this model, the run of the fall observer is less compute-intensive than the one of the fall 
+classifier. In addition, whereas the fall observer should permanently be executed, the fall classifier could only be launched  
+when there is a suspicious audio record. For these reasons, we decide to schedule fall classifier tasks at the middleware 
+level where there is a global view of the resource utilization. Our paper will not focus on the fall observer; instead, 
+we will consider the design of the fall classifier. In the next section, the framework used for its design will be 
+presented. 
 
 
-\section{Building fall detection classifiers} \label{Fall}
+\subsection{Framework for classification} 
+\begin{figure*}[htbp]
+  \captionsetup{aboveskip=-5pt}
+	\centering
+	\includegraphics[scale=0.3]{./Figures/workflow.png}
+	\caption{Training system}
+	\label{fig:training}
+	\end{figure*}
 
-\subsection{Creating the Dataset} 
- 
-In order to be able to design an accurate system, it is really important to create a dataset of significant quality. As for a system like this, it is not easy to create a dataset from the very beginning, we used as main source an already existing Laboratory research dataset~\cite{Dataset}. It contained video data which consisted of falls and other no-fall activities in different environments and especially Office, Home, Coffee room and Lecture room. The frame rate is 25 frames/s and the resolution 320x240 pixels. The dataset containes 191 videos of different time durations, from 6 sec to 1.20 minutes. The use of different environments makes the dataset more complete and representative in compare to others.  
 
-\subsubsection{Audio Extraction}
+Figure~\ref{fig:training} shows the framework we use to build fall classifiers. The representation follows the 
+BPMN notations (An empty lozenge is a join and a lozenge with a plus is a fork...). It is important to notice that 
+the framework was globally conceived to train 0/1 classifiers from acoustic data issued from Qarnot smart-homes. 
+The framework is based on 5 activities and subprocesses that we discuss below.
 
-Using the Audacity software, we extracted the audio and isolated the fall and no-fall segments. The duration of all extracted segments is 5 seconds. Also a re-sampling was done to the audio files in order to have the same sampling rate (44100 Hz) in all of them and they were also converted to monophonic so that they can be used by our python code and libraries used.
+\begin{itemize}
 
-\subsubsection{Noise Mixing and Features extraction}
+\item {\bf PFE:} Given a set of wav files, the goal is to extract the acoustic features of the wav files. PFE is a subprocess 
+consisting of a set of parallel activities where the acoustic features are separately computed from each dataset file. 
+The features we used are the classical ones used in signal processing (Mel-frequency spectrum,energy etc.). Their complete list 
+is defined in~\cite{pyAudioAnalysis}.
 
-Next step of the procedure was the audio files to get mixed with different types of noise (in all available combinations), so that our dataset is an accurate representation of real-life everyday sounds. At the end, the dataset consists of two major categories, Falls and No-falls, each of them containing a big variety of samples from all the different environments that were used to record the videos. So it is clear that our dataset in now complete. After finishing with the creation of the dataset, next step is to extract the features needed to run the algorithms. For this purpose, an open source library was used, the pyAudioAnalysis python library~\cite{giannakopoulos2015pyaudioanalysis} which extracts specific features for each audio file. These features will be used to train the machine learning algorithms.
+\item {\bf GSIN:} The framework implements a grid search process whose goal is to find the best classifiers depending on the 
+parameters we use. GSIN consists in the initialization of this grid search. It generates configurations of parameters and hyperparameters 
+to build the classifier.
+
+\item {\bf LKOCV:} For each input configuration of the grid search, we generate a classifier in learning with 
+Leave-k-out cross-validation. The classifiers we considered will be discussed in the next.
+
+\item {\bf PSEL:} From a list of classifiers whose False and True Positive rates (FPR, TPR) are defined (generated in LKOCV or EVAL), we select the ones that are in the Pareto front where we minimize the FPR and maximize the TPR.
+
+\item {\bf EVAL:}  Assuming a list of classifiers and the input features of the testing dataset, we evaluate here the classifiers on the testing features. The TPR and FPR of each classifier are returned.
+
+\item {\bf TRAIN:} We train the selected classifiers with all data from training and testing sets.
+\end{itemize}
+
+We implemented this framework as a workflow (based on scikit-learn~\footnote{http://scikit-learn.org}) that can locally (in a home) create jobs associated with these different activities in 
+a Qarnot smart-home. The workflow also includes a data collection system that can automatically collect background noises 
+from a Qarnot smart-home and then mixes them with fall noises and other significative sounds in order to have a classifier 
+that is calibrated for the home in which we are. 
+In order to validate the system, we performed various experiments to see if we can create accurate classifiers in 
+such a context. The experiments were organized in two series that will be discussed in the next sections.
+
+
+\section{First serie: building fall classifiers with SVM, KNN and decision trees} \label{Fall}
+
+\subsection{Dataset}
+
+\subsubsection{Falls and significative sounds} 
+
+As already discussed, for training, we considered a basis of audio records that combines: fall noises, significative sounds and 
+background noises. To get fall noises and significative sounds, we used an existing dataset~\cite{Dataset} for fall detection. 
+This dataset includes $191$ videos with different time durations, from $6$ seconds to $1.20$ minutes. The videos where recorded 
+at $25$ frames/s and the resolution is $320 \times 240$ pixels.  Using the Audacity software, we extracted the audios from these videos 
+and isolated the fall and no-fall segments. We considered two durations for the extracted segment: $5$ and $10$ seconds. For each of 
+these durations, we created a specific dataset. Finally, we applied a re-sampling algorithm in order to have the audio files at 
+the same sampling rate ($44100$ Hz).
+
+\subsubsection{Mixture with background noises and features extraction}
+
+Given the fall and no-fall segments, the next stage of the procedure was to mix them with background noises recorded from 
+Qarnot-heaters. The input of the mixture procedure was: the audio records of the previous stage, a proportion 
+value $p_{fall} \in \{ 0.2, 0.4, 0.5, 0.6 \}$ and a record lenght $T \in \{ 5, 10 \}$. For each assignment of value to $p_{fall}$ and $T$, the mixture procedure generated a dataset of $6400$ records. Here, $p_{fall}$ is the proportion of records that will contain a fall 
+and $T$ is the duration of records. For instance, in the case where $p_{fall} = 0.2$ and $T = 10$, we will have a dataset 
+of $6400$ records of $10$ seconds with $20$\% of the records corresponding to falls. If the proportion is $0.6$, then we will 
+have  $6400$ records that include $60$\% of falls.  On each of these dataset, we then applied a feature extraction algorithm 
+to get the MFCCs from the audios. For the extraction, we used the pyAudioAnalysis library~\cite{giannakopoulos2015pyaudioanalysis}. 
 
 \subsubsection{Subsets creation}
 
-The last step to the dataset creation, is to split it in Training and Testing subsets. The proportion remains constant for the entire duration of this experimental research project. Training subset includes 80\% of the main dataset samples and Testing subset 20\%. This split is required in order to produce learning curves for each classifier and also have cross-validation during training them.
+The last step in dataset creation is to specify which data will be part of the test dataset and which ones will be used for 
+training. On each dataset of $6400$ records, we applied a random partitioning algorithm that assigned $80$\% of the data 
+in the train dataset and $20$\% in the test dataset. 
+
+We ran the workflow that implements the framework of Figure~\ref{fig:training} with these different dataset and classifiers. 
+As already stated, we used the Scikit-learn implementation of the classifiers. We also used, for cross-validation, the leave-one-out 
+method implemented in Scikit-learn. 
+
+
+\subsection{Experiments plan}
+
 
 \subsection{SVM and KNN implementation}
 
@@ -532,7 +682,7 @@ Here we present the learning curves for each of the four experimental Phases pre
 
 After testing SVM and KNN classifiers in different amount of data and comparing their scores, it is clear that this kind of system behaves differently depending on the amount of data given each time. The SVM results leave no doubt to this statement. KNN has better scores, but as explained previously it is due to the way it works and classifies falls. Our main accomplishment is the one presented on next section.
 
-\section{Fall detection with bagging} \label{BaggingFall}
+\section{Second serie: fall detection with bagging} \label{BaggingFall}
  
 
 The results of the previous experimentations, made us considering a different approach for this type of system. The data sensitivity issue had to be solved. So in this Section, a new classifier is introduced in order to help us achieve better scores and easier classification of falls and solve the data sensitivity issue. Bootstrap Aggregating, commonly known as Bagging, is an ensemble meta-estimator. It is important to give an explanation of Bagging in order to make clear for the reader, how we think it can help us. Bagging classifier establishes base estimators to randomly selected subsets of our main dataset. Then it aggregates their estimation to produce one final estimation for the entire dataset. This is its main advantage against other methods. 
